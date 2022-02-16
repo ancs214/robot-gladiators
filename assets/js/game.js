@@ -67,13 +67,27 @@ if (promptFight === "skip" || promptFight === "SKIP") {
       window.alert(playerName + " still has " + playerHealth + " health left.");
     }
   }
-}
+};
 
-// for(var i=0; i<enemyNames.length; i++) {
-//   var pickedEnemyName = enemyNames[i];
-//   enemyHealth = 50;
-//   //call fight function with enemy robot
-//   fight(pickedEnemyName);
-// } 
+for(var i=0; i<enemyNames.length; i++) {
+  //if player is still alive, keep fighting
+  if (playerHealth > 0) {
+    //let player know what round theyre in
+    window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
+  
+    //pick new enemy to fight based on index 
+    var pickedEnemyName = enemyNames[i];
+
+    //reset enemyhealth before starting new fight
+    enemyHealth = 50;
+
+    //pass the pickedEnemyName variable's value into the fight function
+    fight(pickedEnemyName);
+} 
+else {
+  window.alert("You have lost your robot in battle! Game Over!");
+  break;
+}
+}
 
 
