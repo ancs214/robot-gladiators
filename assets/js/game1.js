@@ -4,13 +4,20 @@ let playerAttack = 10;
 let playerMoney = 10;
 
 let enemyNames = ['Roborto', 'Amy Android', 'Robo Trumble'];
-let enemyHealth = 50;
+let enemyHealth = Math.floor(Math.random() * 21) + 40;      /* will pick random number from 20-60*/
 let enemyAttack = 12;
 
 console.log(enemyNames);
 console.log(enemyNames.length);
 console.log(enemyNames[0]);
 console.log(enemyNames[3]);
+
+//function to generate a random numeric value
+let randomNumber = function(min, max) {
+  let value = Math.floor(Math.random() * (max - min + 1) + min);
+
+  return value;
+}
 
 // fight function (now with parameter for enemy's name)
 let fight = function (enemyName) {
@@ -27,18 +34,19 @@ let fight = function (enemyName) {
       if (confirmSkip) {
         window.alert(playerName + ' has decided to skip this fight. Goodbye!');
         // subtract money from playerMoney for skipping
-        playerMoney = playerMoney - 10;
+        playerMoney = Math.max(0, playerMoney - 10);
         console.log("playerMoney", playerMoney);
         break;
       }
     }
     //if player chooses to fight, fight
     if (promptFight === 'fight' || promptFight === 'FIGHT') {
-      // remove enemy's health
-    enemyHealth = enemyHealth - playerAttack;
-    console.log(
-      playerName + ' attacked ' + enemyName + '. ' + enemyName + ' now has ' + enemyHealth + ' health remaining.'
-    );
+      // generate random damage value based on player's attack power
+      let damage = randomNumber(playerAttack - 3, playerAttack);
+      enemyHealth = Math.max(0, enemyHealth - damage);
+      console.log(
+        playerName + ' attacked ' + enemyName + '. ' + enemyName + ' now has ' + enemyHealth + ' health remaining.'
+      );
     }
 
     // check enemy's health
@@ -55,8 +63,9 @@ let fight = function (enemyName) {
       window.alert(enemyName + ' still has ' + enemyHealth + ' health left.');
     }
 
-    // remove players's health by subtracting the amount set in the enemyAttack variable
-    playerHealth = playerHealth - enemyAttack;
+    // generate random damage value based on enemy's attack power
+    let damage = randomNumber(enemyAttack - 3, enemyAttack);
+    playerHealth = Math.max(0, playerHealth - damage);
     console.log(
       enemyName + ' attacked ' + playerName + '. ' + playerName + ' now has ' + playerHealth + ' health remaining.'
     );
@@ -90,7 +99,7 @@ let startGame = function () {
       let pickedEnemyName = enemyNames[i];
 
       // reset enemyHealth before starting new fight
-      enemyHealth = 50;
+      enemyHealth = randomNumber(40, 60);
 
       // pass the pickedEnemyName variable's value into the fight function, where it will assume the value of the enemyName parameter
       fight(pickedEnemyName);
@@ -146,10 +155,10 @@ let shop = function () {
     case 'REFILL':
     case 'refill':
       if (playerMoney >= 7) {
-      window.alert('Refilling player\'s health by 20 for 7 dollars.');
-      //increase health and decrease money
-      playerHealth = playerHealth + 20;
-      playerMoney = playerMoney -7;
+        window.alert('Refilling player\'s health by 20 for 7 dollars.');
+        //increase health and decrease money
+        playerHealth = playerHealth + 20;
+        playerMoney = playerMoney - 7;
       } else {
         window.alert('You dont have enough money!');
       }
@@ -157,10 +166,10 @@ let shop = function () {
     case 'UPGRADE':
     case 'upgrade':
       if (playerMoney >= 7) {
-      window.alert('Upgrading player\'s attack by 6 for 7 dollars.');
-      //increase attack and decrease money
-      playerAttack = playerAttack + 6;
-      playerMoney = playerMoney - 7;
+        window.alert('Upgrading player\'s attack by 6 for 7 dollars.');
+        //increase attack and decrease money
+        playerAttack = playerAttack + 6;
+        playerMoney = playerMoney - 7;
       } else {
         window.alert('You dont have enough money!');
       }
