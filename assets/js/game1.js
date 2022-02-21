@@ -5,9 +5,21 @@ let randomNumber = function (min, max) {
   return value;
 }
 
+//function to set player name
+let getPlayerName = function() {
+  //initialize name variable BEFORE the while loop to guarantee entering the loop at least once
+  let name = '';
+  while (name === '' || name === null) {
+    name = prompt('What is your robots name?');
+  }
+  console.log('Your robots name is ' + name);
+  return name;
+};
 
+//PLAYER INFO
+//FUNCTION WITHIN OBJECTS
 let playerInfo = {
-  name: window.prompt('What is your robot\'s name?'),
+  name: getPlayerName(),
   health: 100,
   attack: 10,
   money: 10,
@@ -36,6 +48,7 @@ let playerInfo = {
   }
 };
 
+//ENEMY INFO
 let enemyInfo = [
   {
     name: 'Roborto',
@@ -57,7 +70,7 @@ let enemyInfo = [
 
 
 
-// fight function (now with parameter for enemy's name)
+// FIGHT FUNCTION
 let fight = function (enemy) {
   while (playerInfo.health > 0 && enemy.health > 0) {
     // ask player if they'd like to fight or run
@@ -119,7 +132,7 @@ let fight = function (enemy) {
   }
 };
 
-//function to start a new game
+//START GAME
 let startGame = function () {
   // reset player stats
   playerInfo.reset();
@@ -159,7 +172,7 @@ let startGame = function () {
   }
 };
 
-//function to end entire game
+//END GAME
 let endGame = function () {
   // if player is still alive, player wins!
   if (playerInfo.health > 0) {
@@ -180,13 +193,14 @@ let endGame = function () {
   }
 }
 
+//SHOP FUNCTION
 let shop = function () {
   //ask player what they'd like to do
   let shopOptionPrompt = window.prompt(
     'Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: "REFILL", "UPGRADE", or "LEAVE" to make a choice.'
   );
 
-  //use switch to carry out action
+  //SWITCH CONTROL FLOW STATEMENT
   switch (shopOptionPrompt) {
     case 'REFILL':
     case 'refill':
