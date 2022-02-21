@@ -181,6 +181,24 @@ let endGame = function () {
   else {
     window.alert("You've lost your robot in battle.");
   }
+
+  //check local storage for high score. if not there, use 0
+  //could also write another way using truthy/falsy: 
+  //highScore = highScore || 0;
+  let highScore = localStorage.getItem('highscore');
+  if (highScore === null) {
+    highScore = 0;
+  } 
+
+  //if player has more money than the high score, player will have new record
+  if (playerInfo.money > highScore) {
+    localStorage.setItem('highscore', playerInfo.money);
+    localStorage.setItem('name', playerInfo.name);
+    alert(playerInfo.name + ' now has the high score of ' + playerInfo.money + '!');
+  } else {
+    alert(playerInfo.name + ' did not beat the high score of ' + highScore + '. Maybe next time!');
+  }
+
   // ask player if they'd like to play again
   let playAgainConfirm = window.confirm("Would you like to play again?");
 
@@ -191,7 +209,7 @@ let endGame = function () {
   else {
     window.alert("Thank you for playing Robot Gladiators! Come back soon!");
   }
-}
+};
 
 //SHOP FUNCTION
 let shop = function () {
